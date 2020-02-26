@@ -21,6 +21,14 @@ Vagrant.configure("2") do |config|
     db.vm.provision "shell", path: "environment/db/provision.sh", privileged: false
   end
 
+  config.vm.define "slave" do |slave|
+    slave.vm.box = "ubuntu/bionic64"
+    db.vm.network "private_network", ip: "192.168.10.200"
+    db.hostsupdater.aliases = ["slave.local"]
+    db.vm.synced_folder "environment/slave", "/home/ubuntu/slave"
+    db.vm.provision "shell", path: "environment/slave/provision.sh", privileged: false
+  end
+
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
