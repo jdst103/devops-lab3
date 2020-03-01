@@ -69,7 +69,10 @@ the HEREDOC syntax in ruby is a useful way to create big blocks of code as strin
 
 
 add another line
+
 test 3
+
+
 
 
 
